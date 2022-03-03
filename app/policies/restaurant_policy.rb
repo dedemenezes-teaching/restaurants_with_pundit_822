@@ -24,6 +24,13 @@ class RestaurantPolicy < ApplicationPolicy
   end
 
   def update?
+    # Hyphotetical Scenario
+    # user.role == "admin" || (user.role == "business_employee")
+
+
+    #############################
+    ##### REAL DEAL #############
+    #############################
     owner_or_admin?
   end
 
@@ -34,7 +41,9 @@ class RestaurantPolicy < ApplicationPolicy
   private
 
   def owner_or_admin?
-    @record.user == @user || admin?
+    # user which is the current_user from devise
+    # record which is the instance that we send in the authorize method in the controller
+    @record.user == @user || admin? # read it as @restaurant.user == current_user || current_user.admin == true
   end
 
   def admin?
